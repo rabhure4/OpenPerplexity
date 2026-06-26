@@ -1,8 +1,33 @@
 # OpenPerplexity
 
+![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
+![React](https://img.shields.io/badge/React-18-61DAFB)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 OpenPerplexity is an agentic web-search app. It takes a natural language question, turns it into better search queries, retrieves web results, evaluates whether it has enough evidence, and then synthesizes an answer with citations.
 
 The project has a FastAPI + LangGraph backend and a React + Vite frontend.
+
+Ask a question, watch the agent search the web, and get a cited answer back in real time.
+
+## Repository Status
+
+This project is in active development. The core research loop is working, but there may still be rough edges around deployment, provider behavior, and production hardening.
+
+## Why This Exists
+
+Most chat apps answer directly from the model. OpenPerplexity adds a research loop: it searches the web, evaluates whether the results are enough, searches again when needed, and then answers with citations.
+
+The goal is to show a practical agentic workflow that is small enough to understand, but useful enough to run locally.
+
+## Use Cases
+
+- Research assistant for cited web answers
+- Learning project for LangGraph and agent workflows
+- Starter template for search-augmented AI apps
+- Local playground for comparing LLM and search providers
+- Demo app for streaming AI responses with FastAPI and React
 
 ## Features
 
@@ -20,6 +45,30 @@ The project has a FastAPI + LangGraph backend and a React + Vite frontend.
 - Search: DuckDuckGo, Tavily, SerpAPI
 - LLMs: OpenRouter, OpenAI, Gemini, Ollama
 
+## Quick Start
+
+Run these commands from the repository root:
+
+```bash
+python -m venv backend/.venv
+backend\.venv\Scripts\Activate.ps1
+pip install -r backend/requirements.txt
+cp backend/.env.example backend/.env
+npm --prefix frontend install
+```
+
+Edit `backend/.env` and set at least one LLM provider/model. Then start both apps:
+
+```bash
+python -m uvicorn backend.main:app --reload --port 8001
+npm run frontend:dev
+```
+
+Open the frontend at:
+
+```text
+http://localhost:5173
+```
 
 ## Screenshots
 
@@ -27,13 +76,19 @@ The project has a FastAPI + LangGraph backend and a React + Vite frontend.
 
 ![OpenPerplexity main launch screen](docs/screenshots/main.png)
 
+Main screen for entering a question and selecting model/search providers.
+
 ### App Working State
 
 ![OpenPerplexity working state](docs/screenshots/working.png)
 
+Streaming progress view while the agent reformulates, searches, evaluates, and synthesizes.
+
 ### Response With Citations
 
 ![OpenPerplexity response with citations](docs/screenshots/response.png)
+
+Final answer view with cited sources.
 
 ## How It Works
 
@@ -225,6 +280,8 @@ npm run frontend:build
 
 Backend configuration lives in `backend/.env`.
 
+Never commit `backend/.env`. Use `backend/.env.example` as the template and keep real API keys local.
+
 | Variable | Default | Description |
 | --- | --- | --- |
 | `LLM_PROVIDER` | `openrouter` | `openrouter`, `openai`, `gemini`, or `ollama` |
@@ -244,6 +301,17 @@ Backend configuration lives in `backend/.env`.
 | `MAX_SEARCH_ITERATIONS` | `2` | Maximum follow-up search rounds |
 
 Frontend display settings and API base URL are in `frontend/src/config.js`.
+
+Provider notes:
+
+- DuckDuckGo works without a search API key.
+- Tavily and SerpAPI require their own search API keys.
+- OpenRouter, OpenAI, and Gemini require LLM API keys.
+- Ollama can run locally without a cloud API key if you have Ollama installed and a model pulled.
+
+## Deployment
+
+Deployment guide coming soon. For production, tighten CORS origins, store secrets in your hosting provider's environment system, and add rate limiting/logging around API routes.
 
 ## API
 
