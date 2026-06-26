@@ -23,9 +23,13 @@ The project has a FastAPI + LangGraph backend and a React + Vite frontend.
 
 ## Screenshots
 
-### Main App Screen
+### Main Launch Screen
 
-![OpenPerplexity main app screen](docs/screenshots/working.png)
+![OpenPerplexity main launch screen](docs/screenshots/main.png)
+
+### App Working State
+
+![OpenPerplexity working state](docs/screenshots/working.png)
 
 ### Response With Citations
 
