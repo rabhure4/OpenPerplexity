@@ -23,13 +23,9 @@ The project has a FastAPI + LangGraph backend and a React + Vite frontend.
 
 ## Screenshots
 
-### Main Landing Page
+### Main App Screen
 
-![OpenPerplexity main landing page](docs/screenshots/main.png)
-
-### App In Action
-
-![OpenPerplexity working state](docs/screenshots/working.png)
+![OpenPerplexity main app screen](docs/screenshots/working.png)
 
 ### Response With Citations
 
@@ -221,21 +217,6 @@ Serve the static docs locally with any simple static server, for example:
 python -m http.server 8080 -d docs
 ```
 
-## GitHub Notes
-
-Do not commit real `.env` files, API keys, virtual environments, build output, dependency folders, logs, or Python cache files. This repository includes a `.gitignore` for those files.
-
-The existing `.git` folder in this workspace appears to be invalid because `git status` does not recognize the directory as a repository. Before pushing to GitHub, you may need to initialize a fresh repository:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git push -u origin main
-```
-
 ## License
 
-No license file is included yet. Add a license before publishing if you want other people to know how they may use, modify, and redistribute the project.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
