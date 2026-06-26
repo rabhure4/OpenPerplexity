@@ -35,6 +35,84 @@ The project has a FastAPI + LangGraph backend and a React + Vite frontend.
 
 ![OpenPerplexity response with citations](docs/screenshots/response.png)
 
+## How It Works
+
+OpenPerplexity runs a multi-step research workflow instead of sending the user query directly to an LLM.
+
+1. The user enters a question in the React frontend.
+2. The FastAPI backend sends the query into a LangGraph workflow.
+3. The query reformulator turns the original question into focused search queries.
+4. The search node fetches relevant web results from the selected search provider.
+5. The evaluator checks whether the gathered results are enough to answer well.
+6. If more evidence is needed, the graph loops back for another search round.
+7. The answer synthesizer produces a final response with citations.
+
+## What Makes It Agentic
+
+OpenPerplexity is agentic because it does more than one-shot question answering. It can break a task into steps, use external search tools, evaluate intermediate results, and decide whether to continue searching before producing the final answer.
+
+The backend uses LangGraph to model this as a controlled loop:
+
+```text
+query -> reformulate -> search -> evaluate -> search more or answer
+```
+
+This gives the app a simple but practical research-agent pattern.
+
+## Key Technical Highlights
+
+- LangGraph-powered workflow with conditional routing
+- FastAPI backend with standard and streaming endpoints
+- Server-Sent Events for live progress updates in the UI
+- Runtime provider selection for LLM and search backends
+- Citation-aware answer generation
+- React component structure with separate input, output, state, and shared UI components
+- Static documentation included in the `docs/` directory
+
+## Sample Query / Response
+
+Sample query:
+
+```text
+What is agentic AI and why does it matter?
+```
+
+Sample response shape:
+
+```json
+{
+  "answer": "Agentic AI refers to AI systems that can plan, use tools, evaluate progress, and complete multi-step tasks with less direct human control.",
+  "citations": [
+    {
+      "title": "Example source title",
+      "url": "https://example.com/source",
+      "snippet": "Relevant source excerpt..."
+    }
+  ],
+  "llm_provider": "openrouter",
+  "llm_model": "openai/gpt-4o-mini",
+  "search_provider": "duckduckgo"
+}
+```
+
+## Limitations
+
+- Answer quality depends on the selected model and search provider.
+- Web search results may vary between runs.
+- DuckDuckGo can be rate-limited or return inconsistent results.
+- API keys are entered locally and should not be committed to Git.
+- The app does not verify every claim beyond the retrieved search results.
+- Production deployment needs stricter CORS, secret handling, logging, and rate limiting.
+
+## Roadmap
+
+- Add authentication for deployed usage
+- Add persistent search history
+- Add export options for answers and citations
+- Improve source ranking and deduplication
+- Add automated backend and frontend tests
+- Add deployment guides for common hosting providers
+
 ## Project Structure
 
 ```text
