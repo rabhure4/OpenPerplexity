@@ -20,6 +20,7 @@ The project has a FastAPI + LangGraph backend and a React + Vite frontend.
 - Search: DuckDuckGo, Tavily, SerpAPI
 - LLMs: OpenRouter, OpenAI, Gemini, Ollama
 
+
 ## Screenshots
 
 ### Main Landing Page
